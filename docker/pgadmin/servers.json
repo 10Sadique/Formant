@@ -1,0 +1,14 @@
+{
+  "Servers": {
+    "1": {
+      "Name": "AccentLab Docker PostgreSQL",
+      "Group": "Servers",
+      "Host": "postgres",
+      "Port": 5432,
+      "MaintenanceDB": "accentlab",
+      "Username": "accentlab",
+      "SSLMode": "prefer",
+      "Comment": "Primary AccentLab PostgreSQL 16 Database"
+    }
+  }
+}

@@ -1,0 +1,529 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #FBF9F5;
+  --foreground: #141413;
+}
+
+html.dark {
+  --background: #111110;
+  --foreground: #F3EFE6;
+}
+
+/* ============================================================================
+   0. STRICT DESIGN CONSTRAINTS: ZERO BOX-SHADOWS & ZERO GRADIENTS + ACCESSIBILITY
+   ============================================================================ */
+*,
+*::before,
+*::after {
+  box-shadow: none !important;
+}
+
+[class*="bg-gradient-"],
+[class*="from-"],
+[class*="via-"],
+[class*="to-"] {
+  background-image: none !important;
+}
+
+:focus-visible {
+  outline: 2px solid #1B4332 !important;
+  outline-offset: 2px !important;
+}
+
+html.dark :focus-visible {
+  outline: 2px solid #6EE7B7 !important;
+  outline-offset: 2px !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+html {
+  scrollbar-gutter: stable;
+}
+
+html,
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), -apple-system, BlinkMacSystemFont, sans-serif;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  transition: background-color 0.15s ease, color 0.15s ease;
+  max-width: 100vw;
+  overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Prevent Radix Select from locking body scroll or injecting scrollbar shift */
+body[data-scroll-locked][data-scroll-locked] {
+  overflow-y: auto !important;
+  margin-right: 0 !important;
+  padding-right: 0 !important;
+  --removed-body-scroll-bar-size: 0px !important;
+}
+
+.no-scrollbar::-webkit-scrollbar,
+[data-radix-select-viewport]::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar,
+[data-radix-select-viewport] {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+h1,
+h2,
+.font-editorial {
+  font-family: var(--font-serif), Georgia, Cambria, "Times New Roman", serif;
+  letter-spacing: -0.015em;
+}
+
+/* ============================================================================
+   1. LIGHT MODE: Warm Off-White Alabaster Paper (Default: html:not(.dark))
+   ============================================================================ */
+html:not(.dark) .bg-slate-950,
+html:not(.dark) .bg-slate-950\/90,
+html:not(.dark) .bg-slate-950\/80,
+html:not(.dark) .bg-slate-950\/70,
+html:not(.dark) .bg-slate-950\/60 {
+  background-color: #F4F1EA !important;
+}
+
+html:not(.dark) .bg-slate-900,
+html:not(.dark) .bg-slate-900\/90,
+html:not(.dark) .bg-slate-900\/85,
+html:not(.dark) .bg-slate-900\/80,
+html:not(.dark) .bg-slate-900\/75,
+html:not(.dark) .bg-slate-900\/70,
+html:not(.dark) .bg-slate-900\/60 {
+  background-color: #FFFFFF !important;
+}
+
+html:not(.dark) .border-slate-800,
+html:not(.dark) .border-slate-800\/90,
+html:not(.dark) .border-slate-800\/80,
+html:not(.dark) .border-slate-700,
+html:not(.dark) .border-slate-900 {
+  border-color: #E5E0D5 !important;
+}
+
+/* Invert legacy dark-template text on alabaster cards, but NEVER buttons or badges */
+html:not(.dark) :is(h1, h2, h3, h4, h5, h6, p, td, th):not([class*="bg-"]):not(button *):not(a *):not([role="button"] *).text-white {
+  color: #141413 !important;
+}
+
+html:not(.dark) .text-slate-100,
+html:not(.dark) .text-slate-200 {
+  color: #1F1E1C !important;
+}
+
+html:not(.dark) .text-slate-300 {
+  color: #3D3B36 !important;
+}
+
+html:not(.dark) .text-slate-400,
+html:not(.dark) .text-slate-500 {
+  color: #6E6A61 !important;
+}
+
+/* Light Mode Fallback Remappings to Editorial Palette */
+html:not(.dark) .bg-indigo-600,
+html:not(.dark) .bg-indigo-500,
+html:not(.dark) .bg-violet-600,
+html:not(.dark) .bg-purple-600,
+html:not(.dark) .bg-emerald-600,
+html:not(.dark) .bg-rose-600,
+html:not(.dark) .from-indigo-600 {
+  background-color: #1B4332 !important;
+  background-image: none !important;
+  color: #FFFFFF !important;
+}
+
+html:not(.dark) .bg-indigo-500\/10,
+html:not(.dark) .bg-indigo-500\/15,
+html:not(.dark) .bg-indigo-500\/20,
+html:not(.dark) .bg-indigo-600\/20,
+html:not(.dark) .bg-indigo-950\/20,
+html:not(.dark) .bg-cyan-500\/10,
+html:not(.dark) .bg-cyan-500\/15 {
+  background-color: #E9F2EE !important;
+}
+
+html:not(.dark) .border-indigo-500,
+html:not(.dark) .border-indigo-500\/30,
+html:not(.dark) .border-indigo-500\/50,
+html:not(.dark) .border-cyan-500\/30 {
+  border-color: #E5E0D5 !important;
+}
+
+html:not(.dark) .text-indigo-300,
+html:not(.dark) .text-indigo-400,
+html:not(.dark) .text-indigo-500,
+html:not(.dark) .text-indigo-600,
+html:not(.dark) .text-cyan-300,
+html:not(.dark) .text-cyan-400,
+html:not(.dark) .text-violet-300,
+html:not(.dark) .text-violet-400,
+html:not(.dark) .text-purple-300,
+html:not(.dark) .text-purple-400 {
+  color: #1B4332 !important;
+}
+
+html:not(.dark) .text-emerald-300,
+html:not(.dark) .text-emerald-400 {
+  color: #155E3F !important;
+}
+
+html:not(.dark) .text-amber-300,
+html:not(.dark) .text-amber-400 {
+  color: #9A5B13 !important;
+}
+
+/* Dark Mode Fallback Remappings to Obsidian Palette */
+html.dark .bg-indigo-600,
+html.dark .bg-indigo-500,
+html.dark .bg-violet-600,
+html.dark .bg-purple-600,
+html.dark .bg-emerald-600,
+html.dark .from-indigo-600 {
+  background-color: #265C45 !important;
+  background-image: none !important;
+  color: #FBF9F5 !important;
+}
+
+html.dark .bg-indigo-500\/10,
+html.dark .bg-indigo-500\/15,
+html.dark .bg-indigo-500\/20,
+html.dark .bg-indigo-600\/20,
+html.dark .bg-indigo-950\/20,
+html.dark .bg-cyan-500\/10,
+html.dark .bg-cyan-500\/15 {
+  background-color: rgba(38, 92, 69, 0.35) !important;
+}
+
+html.dark .border-indigo-500,
+html.dark .border-indigo-500\/30,
+html.dark .border-indigo-500\/50,
+html.dark .border-cyan-500\/30 {
+  border-color: #2E2D29 !important;
+}
+
+html.dark .text-indigo-300,
+html.dark .text-indigo-400,
+html.dark .text-indigo-500,
+html.dark .text-cyan-300,
+html.dark .text-cyan-400,
+html.dark .text-violet-300,
+html.dark .text-violet-400,
+html.dark .text-purple-300,
+html.dark .text-purple-400 {
+  color: #6EE7B7 !important;
+}
+
+/* ============================================================================
+   BUTTON & INTERACTIVE CONTROL CONTRAST GUARANTEES (LIGHT & DARK MODES)
+   ============================================================================ */
+
+/* Primary dark green & terracotta buttons, active tabs, and badges ALWAYS have high-contrast white text */
+.bg-\[\#1B4332\],
+button.bg-\[\#1B4332\],
+a.bg-\[\#1B4332\],
+.bg-\[\#265C45\],
+button.bg-\[\#265C45\],
+a.bg-\[\#265C45\],
+.bg-\[\#B84A27\],
+button.bg-\[\#B84A27\],
+a.bg-\[\#B84A27\],
+.bg-indigo-600,
+.bg-emerald-600 {
+  color: #FFFFFF !important;
+}
+
+/* Child spans and text inside dark action buttons inherit pure white */
+button.bg-\[\#1B4332\] *,
+a.bg-\[\#1B4332\] *,
+button.bg-\[\#265C45\] *,
+a.bg-\[\#265C45\] *,
+button.bg-\[\#B84A27\] *,
+a.bg-\[\#B84A27\] * {
+  color: inherit;
+}
+
+/* Explicit button hovers to solid dark colors guarantee white text on hover */
+button:hover.hover\:bg-\[\#1B4332\],
+a:hover.hover\:bg-\[\#1B4332\],
+button:hover.hover\:bg-\[\#B84A27\],
+a:hover.hover\:bg-\[\#B84A27\],
+button:hover.hover\:bg-\[\#265C45\],
+a:hover.hover\:bg-\[\#265C45\] {
+  color: #FFFFFF !important;
+}
+
+/* Any button or role="button" explicitly marked with text-white must always be pure white */
+button.text-white,
+a.text-white,
+[role="button"].text-white,
+button [class*="text-white"],
+a [class*="text-white"],
+[role="button"] [class*="text-white"],
+.text-white:where(button, a, [role="button"], span.rounded-md, span.rounded-full, span.rounded) {
+  color: #FFFFFF !important;
+}
+
+/* ============================================================================
+   2. DARK MODE: Editorial Warm Obsidian & Matte Graphite (html.dark)
+   ============================================================================ */
+html.dark body {
+  background-color: #111110 !important;
+  color: #F3EFE6 !important;
+}
+
+html.dark .bg-\[\#FBF9F5\]:not([class*="dark:bg-"]),
+html.dark .bg-\[\#FBF9F5\]\/95:not([class*="dark:bg-"]) {
+  background-color: #111110 !important;
+  color: #F3EFE6 !important;
+}
+
+/* Secondary panels, toolbars, and inputs */
+html.dark .bg-\[\#F4F1EA\]:not([class*="dark:bg-"]),
+html.dark .bg-\[\#F4F1EA\]\/70:not([class*="dark:bg-"]),
+html.dark .bg-\[\#F4F1EA\]\/80:not([class*="dark:bg-"]),
+html.dark .bg-\[\#F4F1EA\]\/60:not([class*="dark:bg-"]),
+html.dark .bg-\[\#F4F1EA\]\/50:not([class*="dark:bg-"]),
+html.dark .bg-\[\#F4F1EA\]\/40:not([class*="dark:bg-"]),
+html.dark .bg-\[\#EFECE4\]:not([class*="dark:bg-"]),
+html.dark .bg-\[\#EFECE4\]\/70:not([class*="dark:bg-"]),
+html.dark .bg-slate-950,
+html.dark .bg-slate-950\/90,
+html.dark .bg-slate-950\/80,
+html.dark .bg-slate-950\/70,
+html.dark .bg-slate-950\/60 {
+  background-color: #181816 !important;
+}
+
+/* Cards & Elevated Containers */
+html.dark .bg-white:not([class*="dark:bg-"]),
+html.dark .bg-\[\#FFFFFF\]:not([class*="dark:bg-"]),
+html.dark .bg-slate-900,
+html.dark .bg-slate-900\/90,
+html.dark .bg-slate-900\/85,
+html.dark .bg-slate-900\/80,
+html.dark .bg-slate-900\/75,
+html.dark .bg-slate-900\/70,
+html.dark .bg-slate-900\/60 {
+  background-color: #1E1E1B !important;
+}
+
+/* Hairline borders */
+html.dark .border-\[\#E5E0D5\]:not([class*="dark:border-"]),
+html.dark .border-\[\#D2CBB8\]:not([class*="dark:border-"]),
+html.dark .border-\[\#D5CFC2\]:not([class*="dark:border-"]),
+html.dark .border-\[\#EFECE4\]:not([class*="dark:border-"]),
+html.dark .border-slate-800,
+html.dark .border-slate-800\/90,
+html.dark .border-slate-800\/80,
+html.dark .border-slate-700,
+html.dark .border-slate-900 {
+  border-color: #2E2D29 !important;
+}
+
+/* Dark mode primary ink text -> Warm off-white */
+html.dark .text-\[\#141413\]:not([class*="dark:text-"]),
+html.dark .text-\[\#181715\]:not([class*="dark:text-"]),
+html.dark .text-\[\#1F1E1C\]:not([class*="dark:text-"]),
+html.dark .text-\[\#181716\]:not([class*="dark:text-"]),
+html.dark .text-ink:not([class*="dark:text-"]),
+html.dark h1:not([class*="text-[#1B"]):not([class*="text-[#B8"]):not([class*="text-emerald"]):not([class*="dark:text-"]),
+html.dark h2:not([class*="text-[#1B"]):not([class*="text-[#B8"]):not([class*="text-emerald"]):not([class*="dark:text-"]),
+html.dark h3:not([class*="text-[#1B"]):not([class*="text-[#B8"]):not([class*="text-emerald"]):not([class*="dark:text-"]) {
+  color: #F3EFE6 !important;
+}
+
+/* Dark mode secondary / muted body text -> Warm soft gray */
+html.dark .text-\[\#4A4842\]:not([class*="dark:text-"]),
+html.dark .text-\[\#4A4843\]:not([class*="dark:text-"]),
+html.dark .text-\[\#6E6A63\]:not([class*="dark:text-"]),
+html.dark .text-\[\#6E6A61\]:not([class*="dark:text-"]),
+html.dark .text-\[\#3D3B36\]:not([class*="dark:text-"]),
+html.dark .text-ink-secondary:not([class*="dark:text-"]) {
+  color: #B8B3A8 !important;
+}
+
+/* Dark mode faint / caption / timestamp text -> Muted sandstone */
+html.dark .text-\[\#78756E\]:not([class*="dark:text-"]),
+html.dark .text-\[\#78736A\]:not([class*="dark:text-"]),
+html.dark .text-\[\#8A857A\]:not([class*="dark:text-"]),
+html.dark .text-\[\#A39E93\]:not([class*="dark:text-"]),
+html.dark .text-ink-muted:not([class*="dark:text-"]),
+html.dark .text-ink-faint:not([class*="dark:text-"]) {
+  color: #9E9A90 !important;
+}
+
+/* Forest accent text in dark mode -> Vibrant mint/emerald */
+html.dark .text-\[\#1B4332\],
+html.dark .text-emerald-300,
+html.dark .text-emerald-400 {
+  color: #6EE7B7 !important;
+}
+
+/* Terracotta / ochre accent text in dark mode -> Warm terracotta glow */
+html.dark .text-\[\#B84A27\],
+html.dark .text-\[\#9A5B13\],
+html.dark .text-\[\#9A6B1F\],
+html.dark .text-amber-300,
+html.dark .text-amber-400 {
+  color: #F4A261 !important;
+}
+
+/* Forest primary background in dark mode */
+html.dark .bg-\[\#1B4332\]:not([class*="/"]),
+html.dark button.bg-\[\#1B4332\],
+html.dark a.bg-\[\#1B4332\] {
+  background-color: #265C45 !important;
+  color: #FBF9F5 !important;
+}
+
+/* Terracotta primary background in dark mode */
+html.dark .bg-\[\#B84A27\]:not([class*="/"]),
+html.dark button.bg-\[\#B84A27\],
+html.dark a.bg-\[\#B84A27\] {
+  background-color: #B84A27 !important;
+  color: #FFFFFF !important;
+}
+
+/* Forest tint background in dark mode */
+html.dark .bg-\[\#EAF1ED\],
+html.dark .bg-\[\#E9F2EE\],
+html.dark .bg-\[\#E8F2EC\],
+html.dark .bg-\[\#1B4332\]\/10,
+html.dark .bg-\[\#1B4332\]\/15,
+html.dark .bg-\[\#1B4332\]\/20,
+html.dark .bg-\[\#265C45\]\/35 {
+  background-color: rgba(38, 92, 69, 0.35) !important;
+}
+
+/* Sidebar Nav Item Dark Hover Rule & Cream Override in Dark Mode */
+html.dark aside nav a:hover:not([aria-current="page"]):not(.bg-\[\#1B4332\]):not(.bg-\[\#265C45\]) {
+  background-color: #1E1E1B !important;
+  color: #F3EFE6 !important;
+}
+
+html.dark aside nav a:hover:not([aria-current="page"]) svg {
+  color: #F3EFE6 !important;
+}
+
+html.dark .bg-\[\#EAE5DA\],
+html.dark .hover\:bg-\[\#EAE5DA\]:hover {
+  background-color: #1E1E1B !important;
+  color: #F3EFE6 !important;
+}
+
+/* Terracotta / ochre tint background in dark mode */
+html.dark .bg-\[\#FBF4E6\],
+html.dark .bg-\[\#FBF4E6\]\/40,
+html.dark .bg-\[\#F9ECE8\],
+html.dark .bg-\[\#FDF2EE\],
+html.dark .bg-\[\#B84A27\]\/10,
+html.dark .bg-\[\#B84A27\]\/15,
+html.dark .bg-\[\#B84A27\]\/20,
+html.dark .bg-\[\#B84A27\]\/25 {
+  background-color: rgba(184, 74, 39, 0.25) !important;
+}
+
+/* Border tints in dark mode */
+html.dark .border-\[\#1B4332\],
+html.dark .border-\[\#2D6A4F\],
+html.dark .border-\[\#1B4332\]\/25,
+html.dark .border-\[\#1B4332\]\/30 {
+  border-color: rgba(110, 231, 183, 0.35) !important;
+}
+
+html.dark .border-\[\#B84A27\],
+html.dark .border-\[\#E8C5B8\],
+html.dark .border-\[\#B84A27\]\/30,
+html.dark .border-\[\#B84A27\]\/40 {
+  border-color: rgba(244, 162, 97, 0.35) !important;
+}
+
+/* Code tags in dark mode */
+html.dark code:not([class*="text-[#1B"]):not([class*="text-[#B8"]) {
+  background-color: #181816 !important;
+  color: #F3EFE6 !important;
+  border-color: #2E2D29 !important;
+}
+
+html.dark input,
+html.dark select,
+html.dark textarea,
+html.dark [role="combobox"],
+html.dark .accentlab-select-trigger {
+  background-color: #161614 !important;
+  color: #F3EFE6 !important;
+  border-color: #35332E !important;
+}
+
+html:not(.dark) [role="combobox"],
+html:not(.dark) .accentlab-select-trigger {
+  background-color: #FBF9F5 !important;
+  color: #141413 !important;
+  border-color: #D2CBB8 !important;
+}
+
+html:not(.dark) [role="listbox"],
+html:not(.dark) .accentlab-select-content,
+html:not(.dark) .accentlab-select-viewport,
+html:not(.dark) [data-radix-select-viewport] {
+  background-color: #FFFFFF !important;
+  color: #141413 !important;
+  border-color: #D2CBB8 !important;
+}
+
+html:not(.dark) [role="option"],
+html:not(.dark) .accentlab-select-item {
+  background-color: transparent !important;
+  color: #141413 !important;
+}
+
+html:not(.dark) [role="option"][data-highlighted],
+html:not(.dark) [role="option"][data-state="checked"],
+html:not(.dark) .accentlab-select-item[data-highlighted],
+html:not(.dark) .accentlab-select-item[data-state="checked"] {
+  background-color: #E9F2EE !important;
+  color: #1B4332 !important;
+}
+
+html.dark [role="listbox"],
+html.dark .accentlab-select-content,
+html.dark .accentlab-select-viewport,
+html.dark [data-radix-select-viewport] {
+  background-color: #1E1E1B !important;
+  color: #F3EFE6 !important;
+  border-color: #35332E !important;
+}
+
+html.dark [role="option"],
+html.dark .accentlab-select-item {
+  background-color: transparent !important;
+  color: #F3EFE6 !important;
+}
+
+html.dark [role="option"][data-highlighted],
+html.dark [role="option"][data-state="checked"],
+html.dark .accentlab-select-item[data-highlighted],
+html.dark .accentlab-select-item[data-state="checked"] {
+  background-color: rgba(38, 92, 69, 0.45) !important;
+  color: #6EE7B7 !important;
+}
